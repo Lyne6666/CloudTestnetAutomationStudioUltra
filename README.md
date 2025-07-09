@@ -1,2 +1,1 @@
-# CloudTestnetAutomationStudioUltra
-Advanced CloudTestnetAutomationStudioUltra project
+.
