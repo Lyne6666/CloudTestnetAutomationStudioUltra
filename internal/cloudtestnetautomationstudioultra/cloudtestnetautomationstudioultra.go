@@ -6,12 +6,18 @@ import (
 	"os"
 )
 
+// App represents the application with logging and verbosity features.
 type App struct {
 	verbose bool
-	logger *log.Logger
+	logger  *log.Logger
 }
 
-func NewApp(verbose bool) *App {
+// NewApp returns a new instance of the application with the given verbosity level.
+func NewApp(verbose bool) (*App, error) {
+	if verbose && !os.IsStdout(os.Stdout) {
+		return nil, errors.New("verbose mode requires stdout to be a terminal")
+	}
+	
 	app := &App{
 		verbose: verbose,
 		logger: log.New(os.Stdout, "", log.LstdFlags),
@@ -23,9 +29,10 @@ func NewApp(verbose bool) *App {
 		app.logger.SetPrefix("[INFO] ")
 	}
 	
-	return app
+	return app, nil
 }
 
+// Run executes the application logic.
 func (a *App) Run() error {
 	a.logger.Printf("Starting %s processing", "CloudTestnetAutomationStudioUltra")
 	
